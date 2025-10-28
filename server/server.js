@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
+const PostSchema = require('./models/Post.js'); // Ensure models are loaded
 
 // Import routes
 const postRoutes = require('./routes/posts');
@@ -14,6 +15,9 @@ const authRoutes = require('./routes/auth');
 
 // Load environment variables
 dotenv.config();
+
+//connect to database
+PostSchema();
 
 // Initialize Express app
 const app = express();

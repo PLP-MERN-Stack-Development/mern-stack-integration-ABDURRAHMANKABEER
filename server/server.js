@@ -1,23 +1,20 @@
-// server.js - Main server file for the MERN blog application
-
 // Import required modules
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-const PostSchema = require('./models/Post.js'); // Ensure models are loaded
+const errorHandler = require('./middleware/errorMiddleware');
+const userRoutes = require('./routes/userRoutes');
+const authRoutes = require('./routes/auth');
 
 // Import routes
 const postRoutes = require('./routes/posts');
 const categoryRoutes = require('./routes/categories');
-const authRoutes = require('./routes/auth');
+
 
 // Load environment variables
 dotenv.config();
-
-//connect to database
-PostSchema();
 
 // Initialize Express app
 const app = express();
@@ -42,21 +39,17 @@ if (process.env.NODE_ENV === 'development') {
 // API routes
 app.use('/api/posts', postRoutes);
 app.use('/api/categories', categoryRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
+
 
 // Root route
 app.get('/', (req, res) => {
   res.send('MERN Blog API is running');
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(err.statusCode || 500).json({
-    success: false,
-    error: err.message || 'Server Error',
-  });
-});
+// Error Handler Middleware
+app.use(errorHandler);
 
 // Connect to MongoDB and start server
 mongoose

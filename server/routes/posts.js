@@ -9,6 +9,7 @@ const {
     updatePost,
     deletePost,
     addComment,
+    getMyPosts
 } = require('../controllers/postsController');
 
 // /api/posts
@@ -27,5 +28,8 @@ router.route('/:id')
 // /api/posts/:id/comments
 router.route('/:id/comments')
     .post(addComment);
+
+// /api/posts/me
+router.get('/me', protect, getMyPosts);
 
 module.exports = router;

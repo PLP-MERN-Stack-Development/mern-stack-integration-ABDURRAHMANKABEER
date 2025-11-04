@@ -1,35 +1,89 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import PostDetails from "./pages/PostDetails";
+import CreatePost from "./pages/CreatePost";
+import Dashboard from "./pages/AdminDashboard";
+import EditPost from "./pages/EditPost";
+import Categories from "./pages/Categories";
+import CategoryPosts from "./pages/CategoryPosts";
+import ProtectedRoute from "./components/ProtectedRoute";
+import GuestRoute from "./components/GuestRoute";
+import MyPosts from "./pages/MyPosts";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/posts/:id" element={<PostDetails />} />
+
+          {/* Guest only */}
+          <Route
+            path="/login"
+            element={
+              <GuestRoute>
+                <Login />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <GuestRoute>
+                <Register />
+              </GuestRoute>
+            }
+          />
+
+          {/* Protected */}
+          <Route
+            path="/create-post"
+            element={
+              <ProtectedRoute roles={["admin", "author"]}>
+                <CreatePost />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/edit-post/:id"
+            element={
+              <ProtectedRoute roles={["admin", "author"]}>
+                <EditPost />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/my-posts"
+            element={
+              <ProtectedRoute roles={["author"]}>
+                <MyPosts />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Public */}
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/category/:name" element={<CategoryPosts />} />
+        </Routes>
+      </main>
+    </Router>
+  );
 }
 
-export default App
+export default App;

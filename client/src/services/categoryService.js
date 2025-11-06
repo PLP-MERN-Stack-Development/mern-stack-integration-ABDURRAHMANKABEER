@@ -9,6 +9,11 @@ const categoryService = {
     createCategory: async (data) => {
         const res = await api.post("/categories", data);
         return res.data;
+    },
+
+    deleteCategory: async (id) => {
+        const res = await api.delete(`/categories/${id}`);
+        return res.data;
     }
 };
 

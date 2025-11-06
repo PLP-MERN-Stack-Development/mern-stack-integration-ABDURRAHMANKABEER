@@ -1,4 +1,5 @@
 import api from "./api";
+import axios from "axios";
 
 const PostService = {
     //   Get all posts (with pagination + category filter)
@@ -63,7 +64,10 @@ const PostService = {
 
     // Get posts of logged-in user
     getMyPosts: async () => {
-        const res = await api.get(`/posts/me`);
+        const token = localStorage.getItem("token");
+        const res = await api.get(`/posts/me`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
         return res.data;
     }
 };

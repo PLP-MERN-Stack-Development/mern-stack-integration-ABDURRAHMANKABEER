@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { PostService } from "../services/postService";
 
 export default function MyPosts() {
     const [posts, setPosts] = useState([]);
@@ -9,10 +10,8 @@ export default function MyPosts() {
 
     const fetchPosts = async () => {
         try {
-        const res = await axios.get("/posts/me", {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-        setPosts(res.data.data);
+        const res = await PostService.getMyPosts();
+        setPosts(res.data);
         } catch (err) {
         toast.error("Failed to load your posts");
         }
@@ -26,10 +25,7 @@ export default function MyPosts() {
         if(!window.confirm("Are you sure you want to delete this post?")) return;
 
         try {
-        await axios.delete(`/posts/${id}`, {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-
+        await PostService.deletePost(id);
         toast.success("Post deleted");
         setPosts(posts.filter(p => p._id !== id));
         } catch (err) {
@@ -39,7 +35,7 @@ export default function MyPosts() {
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">My Posts</h1>
+            <h1 className="text-2xl text-white font-bold mb-4">My Posts</h1>
 
             {posts.length === 0 ? (
                 <p>No posts yet!</p>
@@ -48,7 +44,7 @@ export default function MyPosts() {
                     {posts.map((post) => (
                         <div key={post._id} className="p-4 border rounded shadow-sm flex justify-between items-center">
                             <div>
-                                <h2 className="font-semibold text-lg">{post.title}</h2>
+                                <h2 className="font-semibold text-white text-lg">{post.title}</h2>
                                 <p className="text-sm text-gray-500">{post.category?.name}</p>
                             </div>
                             <div className="flex gap-2">

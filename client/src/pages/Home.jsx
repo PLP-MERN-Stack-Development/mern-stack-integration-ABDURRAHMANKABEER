@@ -15,7 +15,7 @@ const Home = () => {
 
     return (
         <section className="container mx-auto px-4 py-8">
-            <h1 className="text-2xl font-bold mb-6">Latest Posts</h1>
+            <h1 className="text-2xl font-bold mb-6 text-white">Latest Posts</h1>
 
             {posts.length === 0 ? (
                 <p>No posts yet.</p>

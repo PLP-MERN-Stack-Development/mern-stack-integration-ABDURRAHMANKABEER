@@ -12,7 +12,7 @@ const categories = [
 export default function Categories() {
     return (
         <div className="p-6">
-            <h2 className="text-2xl font-semibold mb-4">Categories</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4">Categories</h2>
 
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
                 {categories.map((cat) => (

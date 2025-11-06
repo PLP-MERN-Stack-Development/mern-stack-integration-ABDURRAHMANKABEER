@@ -3,13 +3,25 @@ const Category = require('../models/Categories');
 const ErrorResponse = require('../utils/errorResponse');
 
 // @desc    Get all posts or filter by category
-// @route   GET /api/posts?category=slug
+// @route   GET /api/posts?category=name-or-slug
 // @access  Public
 exports.getPosts = async (req, res) => {
     try {
         const { category } = req.query;
 
-        const filter = category ? { category } : {};
+        let filter = {};
+
+        if (category) {
+        // find category by name or slug
+        const categoryDoc = await Category.findOne({
+            $or: [{ name: category }, { slug: category }]
+        });
+
+        if (!categoryDoc)
+            return res.status(404).json({ message: "Category not found" });
+
+        filter.category = categoryDoc._id; // ✅ use ObjectId in query
+        }
 
         const posts = await Post.find(filter)
             .populate("author", "name email")
@@ -22,6 +34,7 @@ exports.getPosts = async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 };
+
 
 
 // @desc    Get single post by ID or slug
@@ -68,6 +81,7 @@ exports.createPost = async (req, res) => {
         excerpt,
         featuredImage,
         category,
+        image: req.file?.path || null,
         author,
         tags,
         });
@@ -116,19 +130,25 @@ exports.deletePost = async (req, res) => {
 // @access  Private
 exports.getMyPosts = async (req, res, next) => {
     try {
+        console.log("REQ.USER:", req.user);
         const posts = await Post.find({ author: req.user._id })
-            .populate('category', 'name')
-            .populate('author', 'name email');
+        .populate("category", "name")
+        .populate("author", "name email");
 
         res.status(200).json({
-            success: true,
-            count: posts.length,
-            data: posts
+        success: true,
+        count: posts.length,
+        data: posts,
         });
     } catch (error) {
-        next(error);
+        console.error("🔥 ERROR in getMyPosts:", error.message);
+        res.status(500).json({
+        success: false,
+        message: error.message,
+        });
     }
 };
+
 
 
 // @desc    Add a comment to a post

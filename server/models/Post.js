@@ -14,7 +14,7 @@ const PostSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Please provide content'],
     },
-    featuredImage: {
+    image: {
       type: String,
       default: 'default-post.jpg',
     },

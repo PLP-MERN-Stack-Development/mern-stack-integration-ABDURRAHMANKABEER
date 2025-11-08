@@ -1,78 +1,127 @@
-# MERN Stack Integration Assignment
+# 📰 MERN Blog Application
 
-This assignment focuses on building a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application that demonstrates seamless integration between front-end and back-end components.
+A full-stack MERN (MongoDB, Express, React, Node.js) blog platform that allows users to view and read posts, while administrators can create, edit, and delete posts and categories.
 
-## Assignment Overview
+---
 
-You will build a blog application with the following features:
-1. RESTful API with Express.js and MongoDB
-2. React front-end with component architecture
-3. Full CRUD functionality for blog posts
-4. User authentication and authorization
-5. Advanced features like image uploads and comments
+## 🚀 Project Overview
 
-## Project Structure
+This project is a **Blog Management System** built using the MERN stack. It enables admin users to manage posts and categories, and public users to browse through paginated blog posts. It demonstrates complete frontend-backend integration with image uploads using **Cloudinary**, CRUD operations, and pagination.
 
-```
-mern-blog/
-├── client/                 # React front-end
-│   ├── public/             # Static files
-│   ├── src/                # React source code
-│   │   ├── components/     # Reusable components
-│   │   ├── pages/          # Page components
-│   │   ├── hooks/          # Custom React hooks
-│   │   ├── services/       # API services
-│   │   ├── context/        # React context providers
-│   │   └── App.jsx         # Main application component
-│   └── package.json        # Client dependencies
-├── server/                 # Express.js back-end
-│   ├── config/             # Configuration files
-│   ├── controllers/        # Route controllers
-│   ├── models/             # Mongoose models
-│   ├── routes/             # API routes
-│   ├── middleware/         # Custom middleware
-│   ├── utils/              # Utility functions
-│   ├── server.js           # Main server file
-│   └── package.json        # Server dependencies
-└── README.md               # Project documentation
+---
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd <project-folder>
 ```
 
-## Getting Started
+### 2. Setup the Backend
+```bash
+cd server
+npm install
+```
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week4-Assignment.md` file
-4. Complete the tasks outlined in the assignment
+#### Create a `.env` file with the following:
+```
+MONGO_URI=your_mongo_connection_string
+CLOUDINARY_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
+PORT=5000
+```
 
-## Files Included
+#### Run the backend server:
+```bash
+npm start
+```
 
-- `Week4-Assignment.md`: Detailed assignment instructions
-- Starter code for both client and server:
-  - Basic project structure
-  - Configuration files
-  - Sample models and components
+### 3. Setup the Frontend
+```bash
+cd client
+npm install
+```
 
-## Requirements
+#### Create a `.env` file with:
+```
+VITE_API_URL=http://localhost:5000/api
+```
 
-- Node.js (v18 or higher)
-- MongoDB (local installation or Atlas account)
-- npm or yarn
-- Git
+#### Run the frontend:
+```bash
+npm run dev
+```
 
-## Submission
+---
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+## 🧩 Features Implemented
 
-1. Complete both the client and server portions of the application
-2. Implement all required API endpoints
-3. Create the necessary React components and hooks
-4. Document your API and setup process in the README.md
-5. Include screenshots of your working application
+- Full CRUD operations for posts and categories
+- Image upload via **Cloudinary**
+- Responsive UI built with React and Tailwind CSS
+- Admin and Public sections
+- Paginated posts on the frontend
+- Toast notifications for feedback
+- Organized API structure with Express routes and controllers
 
-## Resources
+---
 
-- [MongoDB Documentation](https://docs.mongodb.com/)
-- [Express.js Documentation](https://expressjs.com/)
-- [React Documentation](https://react.dev/)
-- [Node.js Documentation](https://nodejs.org/en/docs/)
-- [Mongoose Documentation](https://mongoosejs.com/docs/) 
+## 📡 API Documentation
+
+### 🔹 Categories
+
+| Method | Endpoint          | Description               |
+|--------|--------------------|---------------------------|
+| GET    | `/api/categories` | Get all categories         |
+| POST   | `/api/categories` | Create a new category      |
+| PUT    | `/api/categories/:id` | Update a category     |
+| DELETE | `/api/categories/:id` | Delete a category     |
+
+### 🔹 Posts
+
+| Method | Endpoint          | Description               |
+|--------|--------------------|---------------------------|
+| GET    | `/api/posts`      | Get all posts              |
+| POST   | `/api/posts`      | Create a new post (with image) |
+| GET    | `/api/posts/:id`  | Get post by ID             |
+| PUT    | `/api/posts/:id`  | Update a post              |
+| DELETE | `/api/posts/:id`  | Delete a post              |
+
+---
+
+## 🖼️ Screenshots
+
+### Homepage (Public View)
+![Homepage](screenshots/home.png)
+
+### Admin Dashboard
+![Admin](screenshots/admin.png)
+
+### Post Creation Page
+![Create Post](screenshots/create-post.png)
+
+---
+
+## 👨‍💻 Technologies Used
+
+- **Frontend:** React, Axios, React Router, Tailwind CSS
+- **Backend:** Node.js, Express.js, MongoDB, Mongoose
+- **Cloud Services:** Cloudinary for image upload
+- **Notifications:** React Hot Toast
+
+---
+
+## 🧠 Author
+
+**Abdurrahman Kabir**  
+📧 abdurrahmankabeer2003@gmail.com  
+🔗 [GitHub](https://github.com/ABDURRAHMANKABEER)  
+🔗 [LinkedIn](https://www.linkedin.com/in/abdurrahman-kabir-10580220b)
+
+---
+
+## 🏁 Conclusion
+
+This MERN Blog Application demonstrates core full-stack development principles including API creation, database management, frontend integration, and image handling. It is a perfect reference project for understanding CRUD operations, Express routes, and frontend-backend communication.
